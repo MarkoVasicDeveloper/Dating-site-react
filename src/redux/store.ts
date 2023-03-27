@@ -1,20 +1,21 @@
-import { combineReducers, configureStore, PreloadedState } from "@reduxjs/toolkit";
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import { combineReducers, configureStore, type PreloadedState } from '@reduxjs/toolkit'
 
-import userReducer from './user/userSlice';
+import userReducer from './user/userSlice'
 
 const rootReducer = combineReducers({
-    user: userReducer
-});
+  user: userReducer
+})
 
-export const setupStore = (preloadedState?: PreloadedState<RootState>) => 
-    configureStore({
-        reducer: rootReducer,
-        preloadedState,
-        middleware: getDefaultMiddleware => getDefaultMiddleware({
-            serializableCheck: false
-          })
-    });
+export const setupStore = (preloadedState?: PreloadedState<RootState>) =>
+  configureStore({
+    reducer: rootReducer,
+    preloadedState,
+    middleware: getDefaultMiddleware => getDefaultMiddleware({
+      serializableCheck: false
+    })
+  })
 
-export type RootState = ReturnType<typeof rootReducer>;
-export type AppStore = ReturnType<typeof setupStore>;
-export type AppDispatch = AppStore["dispatch"];
+export type RootState = ReturnType<typeof rootReducer>
+export type AppStore = ReturnType<typeof setupStore>
+export type AppDispatch = AppStore['dispatch']

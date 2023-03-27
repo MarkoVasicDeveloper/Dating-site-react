@@ -1,0 +1,43 @@
+@import '../../scss/defaultStyle.scss';
+
+#login-page{
+
+    .message {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    form{
+        margin: 0 auto;
+        width: #{"max(250px, 70vw)"};
+
+        .submit{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .radio-inputs{
+            display: flex;
+            flex-wrap: wrap;
+        }
+    }
+}
+
+.linkButton{
+    width: max-content;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.createAccauntButton{
+    width: max-content;
+    background-color: transparent;
+    padding: 0.3rem;
+    border: 1px solid $warning;
+    cursor: pointer;
+    color: $warning;
+    border-radius: 10px;
+}

@@ -1,0 +1,21 @@
+@import '../../../scss/defaultStyle.scss';
+
+.select-container{
+    width: max-content;
+    margin: 0.5rem;
+
+    label{
+        margin-right: .5rem;
+        margin-bottom: .7rem;
+    }
+
+    .select-input{
+        background-color: transparent;
+        border: 2px solid #d4d8de;
+        border-radius: 5px;
+
+        .option{
+            background-color: rgba($secondary, 0.5);
+        }
+    }
+}
