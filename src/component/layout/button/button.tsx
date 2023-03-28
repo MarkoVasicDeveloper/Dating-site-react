@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-/* eslint-disable react/react-in-jsx-scope */
-import { useLayoutEffect, useState } from 'react'
+import { type ReactElement, useLayoutEffect, useState } from 'react'
 import './button.scss'
 
 interface ButtonProps {
@@ -13,7 +11,7 @@ interface ButtonProps {
   default?: boolean
 }
 
-export function Button (data: ButtonProps) {
+export function Button (data: ButtonProps): ReactElement {
   const [implementClasses, setImplementClasses] = useState('')
 
   useLayoutEffect(() => {
