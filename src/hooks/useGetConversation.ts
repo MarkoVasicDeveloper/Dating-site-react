@@ -18,7 +18,6 @@ export function useGetConversation (user: User): void {
         users()
           .then((res) => {
             if (res.status === 'error') { navigate('/', { replace: true }); return }
-            console.log(res.data)
             dispatch(userData({ conversationRequestUsers: res.data }))
           })
           .catch(() => { navigate('/', { replace: true }) })
