@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios'
 import { baseConfig } from '../config/baseConfig'
 
@@ -13,7 +11,7 @@ export async function apiRequest (
   method: 'post' | 'get' | 'delete' | 'put',
   body: any,
   role: 'lady' | 'gentleman' | 'gentlemanPremium' | 'gentlemanVip' | 'administrator'
-) {
+): Promise<ApiResponse> {
   return await new Promise <ApiResponse>((resolve) => {
     const requestData = {
       method,
@@ -63,7 +61,7 @@ export async function apiRequest (
 async function responseHandler (
   res: AxiosResponse<any>,
   resolve: (value: ApiResponse) => void
-) {
+): Promise<void> {
   if (res.status < 200 || res.status >= 300) {
     const response: ApiResponse = {
       status: 'error',
@@ -111,7 +109,7 @@ async function refreshToken (
 async function repeatRequest (
   requestData: AxiosRequestConfig,
   resolve: (value: ApiResponse) => void
-) {
+): Promise<void> {
   axios(requestData)
     .then((res) => {
       let response: ApiResponse
@@ -142,7 +140,7 @@ async function repeatRequest (
 
 function getToken (role: 'lady' | 'gentleman' | 'gentlemanPremium' | 'gentlemanVip' | 'administrator'): string {
   const token = localStorage.getItem('api_token' + role)
-  return `'Berer '${token}`
+  return `Berer ${String(token)}`
 }
 
 function getRefreshToken (role: 'lady' | 'gentleman' | 'gentlemanPremium' | 'gentlemanVip' | 'administrator'): string {
@@ -150,10 +148,10 @@ function getRefreshToken (role: 'lady' | 'gentleman' | 'gentlemanPremium' | 'gen
   return String(token)
 }
 
-export function saveRefreshToken (role: 'lady' | 'gentleman' | 'gentlemanPremium' | 'gentlemanVip' | 'administrator', token: string) {
+export function saveRefreshToken (role: 'lady' | 'gentleman' | 'gentlemanPremium' | 'gentlemanVip' | 'administrator', token: string): void {
   localStorage.setItem('api_refresh_token' + role, token)
 }
 
-export function saveToken (role: 'lady' | 'gentleman' | 'gentlemanPremium' | 'gentlemanVip' | 'administrator', token: string) {
+export function saveToken (role: 'lady' | 'gentleman' | 'gentlemanPremium' | 'gentlemanVip' | 'administrator', token: string): void {
   localStorage.setItem('api_token' + role, token)
 }

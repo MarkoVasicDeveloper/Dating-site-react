@@ -7,16 +7,25 @@ export interface User {
   id: number
   username: string
   token: string
-  role: string
+  role: 'lady' | 'gentleman' | 'gentlemanPremium' | 'gentlemanVip' | 'administrator'
   conversationRequest: []
   unreadedMessage: []
+  blocked: null
+  city: string
+  conversations: Array<Record<string, unknown>>
+  created: string
+  dateOfBirth: string
+  email: string
+  about: Array<Record<string, unknown>>
+  lastLogin: string
+  notification: '0' | '1'
+  numberOfMessage: number
+  photo: Array<Record<string, unknown>>
+  state: string
+  conversationsWithUsers: []
 }
 
-interface userState {
-  user: User
-}
-
-const initialState = {} as userState
+const initialState = {} as User
 
 export const userSlice = createSlice({
   name: 'user',
