@@ -3,26 +3,47 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { type RootState } from '../store'
 
-export interface User {
-  id: number
-  username: string
-  token: string
-  role: 'lady' | 'gentleman' | 'gentlemanPremium' | 'gentlemanVip' | 'administrator'
-  conversationRequest: []
-  unreadedMessage: []
-  blocked: null
+export interface UserData {
+  blocked: [] | null
   city: string
-  conversations: Array<Record<string, unknown>>
+  conversationRequest: null | Array<Record<string, unknown>>
+  conversations: null | Array<Record<string, unknown>>
   created: string
   dateOfBirth: string
   email: string
-  about: Array<Record<string, unknown>>
-  lastLogin: string
+  lastLogIn: string
   notification: '0' | '1'
-  numberOfMessage: number
-  photo: Array<Record<string, unknown>>
+  password: string
+  rules: '0' | '1'
   state: string
+  username: string
+  verified: '0' | '1'
+}
+
+export interface Lady extends UserData {
+  ladyAbouts: Record<string, unknown>
+  ladyId: number
+  photosLadies: Array<Record<string, unknown>>
+}
+
+export interface Gentleman extends UserData {
+  gentlemanAbouts: Record<string, unknown>
+  gentlemanId: number
+  numberOfMessage: number
+  photosGentleman: []
+}
+
+export interface User extends UserData {
+  id: number
+  token: string
+  role: 'lady' | 'gentleman' | 'gentlemanPremium' | 'gentlemanVip' | 'administrator'
+  unreadedMessage: []
+  about: Array<Record<string, unknown>>
+  photo: Array<Record<string, unknown>>
+  conversationRequest: []
   conversationsWithUsers: []
+  photosDestination: string
+  usersPhotosDestination: string
 }
 
 const initialState = {} as User
@@ -43,3 +64,4 @@ export const { userData } = userSlice.actions
 export default userSlice.reducer
 
 export const selectUser = (state: RootState) => state.user
+export const selectUsersPhoto = (state: RootState) => state.user.usersPhotosDestination

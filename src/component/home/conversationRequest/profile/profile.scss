@@ -1,0 +1,61 @@
+@import '../../../../scss/defaultStyle.scss';
+
+#profile-section {
+    .title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: $h1;
+        border-bottom: 1px solid $border;
+        & > h2{
+            color: $h1;
+            font-size: 2.5rem;
+            margin-right: 2rem;
+        }
+    
+        & > span {
+            font-size: 2rem;
+        }
+    
+    }
+    .profile-galery {
+        position: relative;
+        min-height: 500px;
+    }
+
+    .basic-info {
+        padding: 1rem;
+        color: $secondaryText;
+
+        & > h3 {
+            font-family: $secondaryFont;
+            color: $primaryText;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        & svg {
+            color: $secondary;
+            margin-right: 1rem;
+        }
+
+        & > div {
+            border: 1px solid red;
+            display: flex;
+            flex-wrap: wrap;
+            & > div {
+
+                & > span:nth-child(3) {
+                    color: $thirdText;
+                    font-family: $secondaryFont;
+                    font-size: 1.2rem;
+                    font-style: italic;
+                }
+
+                width: max-content;
+                margin-bottom: 1rem;
+                margin-right: 1rem;
+            }
+        }
+    }
+}

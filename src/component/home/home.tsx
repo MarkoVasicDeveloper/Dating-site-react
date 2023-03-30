@@ -13,6 +13,8 @@ import './home.scss'
 import { AccountButton } from './accountButton/accountButton'
 import { useState } from 'react'
 import { Button } from '../layout/button/button'
+import { Modal } from '../modal/modal'
+import { ConversationRequest } from './conversationRequest/conversationRequest'
 // import { Main } from './main/main'
 // import { Modal } from '../modal/modal'
 // import { Account } from './account/account'
@@ -55,8 +57,8 @@ export function Home (): JSX.Element {
                   {/* <span>{unreadedMesssage}</span> */}
                   <Button titleFusnote="Poruke" implementClass="iconButtons" onClickFunction={undefined} title={<FontAwesomeIcon icon={faMessage} />} />
                 {/* </div> */}
-                <div className={user.conversationRequest.length === 0 ? 'hidden' : 'notification'}>
-                  <span>{user.conversationRequest.length}</span>
+                <div className={user.conversationRequest === null ? 'hidden' : 'notification'}>
+                  <span>{user.conversationRequest?.length}</span>
                   <Button titleFusnote="Zahtevi za dopisivanje" implementClass="iconButtons" onClickFunction={() => { setOpenConversationRequest(!openConversationRequest) }} title={<FontAwesomeIcon icon={faLink} />} />
                 </div>
               </div>
@@ -65,13 +67,13 @@ export function Home (): JSX.Element {
           <div className="bar-content"></div>
         </div>
         <div className="main">
-          {/* <Main />
-          <Modal open={openAccount} close={() => { setOpenAccount(!openAccount) }} >
+          {/* <Main /> */}
+          {/* <Modal open={openAccount} close={() => { setOpenAccount(!openAccount) }} >
             <Account />
-          </Modal>
-          <Modal open={openConversationRequest} close={() => { setOpenConversationRequest(!openConversationRequest) }}>
-            <ConversationRequest remove={removeRequest} request={requestInfo}/>
           </Modal> */}
+          <Modal open={openConversationRequest} close={() => { setOpenConversationRequest(!openConversationRequest) }}>
+            <ConversationRequest removeRequest={undefined} conversationsWithUsers={user.conversationsWithUsers}/>
+          </Modal>
         </div>
       </section>
   )
