@@ -4,20 +4,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { UserInfo } from './userInfo/userInfo'
 import { useTypedSelector } from '../../../hooks/useTypedSelector'
 import { type Gentleman, type Lady, selectUsersPhoto } from '../../../redux/user/userSlice'
-import { useEffect } from 'react'
 
 interface RequestProps {
   conversationsWithUsers: Record<string, any>
-  removeRequest: any
 }
 
-export function ConversationRequest ({ conversationsWithUsers, removeRequest }: RequestProps): JSX.Element {
+export function ConversationRequest ({ conversationsWithUsers }: RequestProps): JSX.Element {
   const userPhoto = useTypedSelector(selectUsersPhoto)
-  useEffect(() => { console.log(conversationsWithUsers) }, [])
+
   return (
         <section>
             {
-                conversationsWithUsers === undefined
+                conversationsWithUsers === undefined || conversationsWithUsers.length === 0
                   ? <div className='request-container'>
                         <h2>Nemate zahteva za povezivanje.</h2>
                         <span><FontAwesomeIcon icon={faFaceRollingEyes} /></span>
@@ -29,7 +27,6 @@ export function ConversationRequest ({ conversationsWithUsers, removeRequest }: 
                                 conversationsWithUsers.map((conversation: Lady | Gentleman, index: number) => (
                                     <UserInfo
                                       key={index}
-                                      removeRequest={removeRequest}
                                       index={index}
                                       conversation={conversation}
                                       usersPhotos={userPhoto} />

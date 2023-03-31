@@ -64,4 +64,7 @@ export const { userData } = userSlice.actions
 export default userSlice.reducer
 
 export const selectUser = (state: RootState) => state.user
+export const selectUserId = (state: RootState) => state.user.id
+export const selectUserRole = (state: RootState) => state.user.role
 export const selectUsersPhoto = (state: RootState) => state.user.usersPhotosDestination
+export const selectUserConversationRequest = (state: RootState) => state.user.conversationsWithUsers
