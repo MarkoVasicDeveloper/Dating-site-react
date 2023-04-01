@@ -11,8 +11,9 @@ export function useGetUser (): User {
   const navigate = useNavigate()
 
   useEffect(() => {
+    const query = user.role === 'lady' ? 'lady' : 'gentleman'
     const getUser = async function (): Promise<ApiResponse> {
-      return await apiRequest(`api/get/${user.role}/${user.id}`, 'get', null, user.role)
+      return await apiRequest(`api/get/${query}/${user.id}`, 'get', null, user.role)
     }
     getUser()
       .then((res) => {

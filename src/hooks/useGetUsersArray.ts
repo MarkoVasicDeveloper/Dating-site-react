@@ -13,7 +13,7 @@ export function useGetUsersArray (page: number): void {
   const navigate = useNavigate()
 
   useEffect(() => {
-    const query = userRole === 'gentleman' ? 'allLady' : 'allGentleman'
+    const query = userRole === 'lady' ? 'allGentleman' : 'allLady'
     const users = async (): Promise<any> => await apiRequest(`/api/get/${query}/${page}/${userId}`, 'get', null, userRole)
 
     users()

@@ -29,8 +29,8 @@ export function useLoginCheck () {
             username: res.data.username,
             token: res.data.token,
             role: res.data.role,
-            photosDestination: `http://localhost:3002/assets/photo/${res.data.role === 'gentleman' ? 'Gentleman' : 'Lady'}`,
-            usersPhotosDestination: `http://localhost:3002/assets/photo/${res.data.role === 'gentleman' ? 'Lady' : 'Gentleman'}`
+            photosDestination: `http://localhost:3002/assets/photo/${res.data.role === 'lady' ? 'Lady' : 'Gentleman'}`,
+            usersPhotosDestination: `http://localhost:3002/assets/photo/${res.data.role === 'lady' ? 'Gentleman' : 'Lady'}`
           }))
 
           saveToken(res.data.role, res.data.token)

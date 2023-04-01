@@ -2,16 +2,13 @@ import './conversationRequest.scss'
 import { faFaceKissBeam, faFaceRollingEyes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { UserInfo } from './userInfo/userInfo'
-import { useTypedSelector } from '../../../hooks/useTypedSelector'
-import { type Gentleman, type Lady, selectUsersPhoto } from '../../../redux/user/userSlice'
+import { type Gentleman, type Lady } from '../../../redux/user/userSlice'
 
 interface RequestProps {
   conversationsWithUsers: Record<string, any>
 }
 
 export function ConversationRequest ({ conversationsWithUsers }: RequestProps): JSX.Element {
-  const userPhoto = useTypedSelector(selectUsersPhoto)
-
   return (
         <section>
             {
@@ -29,7 +26,7 @@ export function ConversationRequest ({ conversationsWithUsers }: RequestProps): 
                                       key={index}
                                       index={index}
                                       conversation={conversation}
-                                      usersPhotos={userPhoto} />
+                                      interact={true}/>
                                 ))
                             }
                         </div>

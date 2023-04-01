@@ -24,15 +24,6 @@ export function Main (): JSX.Element {
   const [sendMessageReguest, setSendMessageRequest] = useState(false)
   const [shop, setShop] = useState(false)
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const role = user.role === 'gentleman' ? 'allLady' : 'allGentleman'
-  //     const users = await apiRequest(`/api/get/${role}/${page}/${user.id}`, 'get', null, user.role)
-  //     if (users.status === 'login') { navigate('/', { replace: true }); return }
-  //     setUsersArray((prev: any) => [...prev, ...users.data])
-  //   })()
-  // }, [page])
-
   function displayUser (value: number): void {
     if (display + 2 === usersArray.length) setPage((prev: number) => prev + 1)
     if (value < 0 && display === 0) return

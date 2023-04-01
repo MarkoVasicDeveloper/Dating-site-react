@@ -7,7 +7,7 @@ import './modal.scss'
 interface ModalProps {
   open: boolean
   children: any
-  close: any
+  close: () => void
 }
 
 export function Modal ({ open, children, close }: ModalProps) {
