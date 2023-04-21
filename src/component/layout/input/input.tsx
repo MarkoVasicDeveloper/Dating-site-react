@@ -6,6 +6,7 @@ import './input.scss'
 
 interface InputParam {
   onChangeInput: any
+  onEnter?: any
   type?: string
   name: any
   id: string
@@ -15,7 +16,7 @@ interface InputParam {
   placeholder?: string
 }
 
-export function Input ({ onChangeInput, type, name, id, title, required, footnoteTitle, placeholder }: InputParam) {
+export function Input ({ onChangeInput, onEnter, type, name, id, title, required, footnoteTitle, placeholder }: InputParam) {
   const [message, setMessage] = useState(' ')
   const [invalid, setInvalid] = useState(false)
   const [dirty, setDirty] = useState(false)
@@ -37,6 +38,14 @@ export function Input ({ onChangeInput, type, name, id, title, required, footnot
     onChangeInput(event)
   }
 
+  function setOnEnter (event: React.KeyboardEvent<HTMLInputElement>) {
+    if (event.key === 'Enter') {
+      (event.target as HTMLInputElement).value = ''
+      onChangeInput(name)
+      onEnter();
+    }
+  }
+
   return (
         <div className={ type === 'radio' ? 'input-div radio' : 'input-div'}>
             <label htmlFor={ id } title = { footnoteTitle }>{ title }</label>
@@ -45,6 +54,7 @@ export function Input ({ onChangeInput, type, name, id, title, required, footnot
                 name = { name }
                 type = { type ?? 'text'}
                 onChange={(event) => { validation(event) }}
+                onKeyUp={(event) => { setOnEnter(event) }}
                 id = { id }
                 onFocus = {() => { setDirty(true) }}
                 onBlur = {(event) => { validation(event) }}

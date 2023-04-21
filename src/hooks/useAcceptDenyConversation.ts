@@ -2,8 +2,7 @@ import { useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { apiRequest } from '../api/apiRequest'
-import { selectUserConversationRequest, userData, type User } from '../redux/user/userSlice'
-import { useTypedSelector } from './useTypedSelector'
+import { type User, setRequestConversation } from '../redux/user/userSlice'
 
 interface UseAcceptDenyConversationProps {
   user: User
@@ -14,7 +13,6 @@ interface UseAcceptDenyConversationProps {
 export function useAcceptDenyConversation (
   { ...props }: UseAcceptDenyConversationProps): { hide: boolean, sendAcceptDenyRequest: (accept: boolean) => Promise<void> } {
   const dispatch = useDispatch()
-  const conversationRequest = useTypedSelector(selectUserConversationRequest)
 
   const [hide, setHide] = useState(false)
   const navigate = useNavigate()
@@ -32,11 +30,10 @@ export function useAcceptDenyConversation (
       }
       await apiRequest(url, method, requestBody, props.user.role)
         .then((res) => {
-          if (res.status !== 'error') setHide(!hide)
-          const filteredRequest = conversationRequest.filter((req: any) => req.id !== props.conversation.id)
-          dispatch(userData({ conversationsWithUsers: [...filteredRequest] }))
+          if (res.status !== 'error') setHide(!hide);
+          dispatch(setRequestConversation({ username: props.conversation.username }));
         })
-        .catch((error) => { navigate('/', { replace: true }); console.log(error) })
+        .catch((error) => { navigate('/', { replace: true }); console.log(error) });
     },
     []
   )

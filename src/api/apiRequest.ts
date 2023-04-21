@@ -1,5 +1,4 @@
 import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios'
-import { baseConfig } from '../config/baseConfig'
 
 export interface ApiResponse {
   status: 'ok' | 'error' | 'login'
@@ -16,7 +15,7 @@ export async function apiRequest (
     const requestData = {
       method,
       url: path,
-      baseURL: baseConfig.baseUrl,
+      baseURL: process.env.REACT_APP_BASE_URL,
       data: JSON.stringify(body),
       headers: {
         'Content-Type': 'application/json',
@@ -83,13 +82,13 @@ async function responseHandler (
 async function refreshToken (
   role: 'lady' | 'gentleman' | 'gentlemanPremium' | 'gentlemanVip' | 'administrator'
 ): Promise<string | null> {
-  const token = getRefreshToken(role)
+  const token = getToken(role)
   const path = `/auth/refresh/${token}`
 
   const refreshTokenRequestData: AxiosRequestConfig = {
     method: 'get',
     url: path,
-    baseURL: baseConfig.baseUrl,
+    baseURL: process.env.REACT_APP_BASE_URL,
     headers: {
       'Content-Type': 'application/json'
     }
@@ -113,7 +112,6 @@ async function repeatRequest (
   axios(requestData)
     .then((res) => {
       let response: ApiResponse
-      console.log(res)
       if (res.status === 401) {
         response = {
           status: 'login',
@@ -139,19 +137,10 @@ async function repeatRequest (
 }
 
 function getToken (role: 'lady' | 'gentleman' | 'gentlemanPremium' | 'gentlemanVip' | 'administrator'): string {
-  const token = localStorage.getItem('api_token' + role)
+  const token = localStorage.getItem('api_token_' + role)
   return `Berer ${String(token)}`
 }
 
-function getRefreshToken (role: 'lady' | 'gentleman' | 'gentlemanPremium' | 'gentlemanVip' | 'administrator'): string {
-  const token = localStorage.getItem('api_refresh_token' + role)
-  return String(token)
-}
-
-export function saveRefreshToken (role: 'lady' | 'gentleman' | 'gentlemanPremium' | 'gentlemanVip' | 'administrator', token: string): void {
-  localStorage.setItem('api_refresh_token' + role, token)
-}
-
 export function saveToken (role: 'lady' | 'gentleman' | 'gentlemanPremium' | 'gentlemanVip' | 'administrator', token: string): void {
-  localStorage.setItem('api_token' + role, token)
+  localStorage.setItem('api_token_' + role, token)
 }

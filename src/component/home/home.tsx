@@ -13,18 +13,21 @@ import { ConversationRequest } from './conversationRequest/conversationRequest'
 import { Account } from './account/account'
 import { Main } from './main/main'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
-import { selectUserConversationRequest } from '../../redux/user/userSlice'
+import { selectConversationsRequestWithUsersData, selectUserUnreadedMessage } from '../../redux/user/userSlice'
 import { Search } from './main/search/search'
+import { Chat } from './chart/chat'
 
 export function Home (): JSX.Element {
   const user = useGetUser()
-  const conversationsWithUsers = useTypedSelector(selectUserConversationRequest)
-  useGetConversation(user)
-  useGetMessage(user.id, user.role)
+  const conversationsWithUsers = useTypedSelector(selectConversationsRequestWithUsersData);
+  const unreadedMessage = useTypedSelector(selectUserUnreadedMessage);
 
-  const [openAccount, setOpenAccount] = useState(false)
-  const [openConversationRequest, setOpenConversationRequest] = useState(false)
-  const [openSearch, setOpenSearch] = useState(false)
+  useGetConversation(user);
+  useGetMessage(user.id, user.role);
+
+  const [openAccount, setOpenAccount] = useState(false);
+  const [openConversationRequest, setOpenConversationRequest] = useState(false);
+  const [openSearch, setOpenSearch] = useState(false);
 
   return (
       <section id="home">
@@ -35,10 +38,10 @@ export function Home (): JSX.Element {
               <div className="otherButtons">
                 <Button titleFusnote="Pretrazi" implementClass="iconButtons" onClickFunction={() => { setOpenSearch(!openSearch) }} title={<FontAwesomeIcon icon={faSearch} />} />
                 <Button titleFusnote="Posalji poklon" implementClass="iconButtons" onClickFunction={() => { setOpenAccount(!openAccount) }} title={<FontAwesomeIcon icon={faGift} />} />
-                {/* <div className={unreadedMesssage === 0 ? 'hidden' : 'notification'}> */}
-                  {/* <span>{unreadedMesssage}</span> */}
-                  <Button titleFusnote="Poruke" implementClass="iconButtons" onClickFunction={undefined} title={<FontAwesomeIcon icon={faMessage} />} />
-                {/* </div> */}
+                <div className={unreadedMessage?.length === 0 ? 'hidden' : 'notification'}>
+                  <span>{unreadedMessage?.length}</span>
+                  <Button titleFusnote="Poruke" implementClass="iconButtons" onClickFunction={() => console.log(unreadedMessage)} title={<FontAwesomeIcon icon={faMessage} />} />
+                </div>
                 <div className={conversationsWithUsers === undefined || conversationsWithUsers.length === 0 ? 'hidden' : 'notification'}>
                   <span>{conversationsWithUsers?.length}</span>
                   <Button titleFusnote="Zahtevi za dopisivanje" implementClass="iconButtons" onClickFunction={() => { setOpenConversationRequest(!openConversationRequest) }} title={<FontAwesomeIcon icon={faLink} />} />
@@ -46,7 +49,9 @@ export function Home (): JSX.Element {
               </div>
             </nav>
           </div>
-          <div className="bar-content"></div>
+          <div className="bar-content">
+            <Chat />
+          </div>
         </div>
         <div className="main">
           {

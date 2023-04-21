@@ -15,16 +15,16 @@ import './login.scss'
 export function LogIn (): JSX.Element {
   const navigate = useNavigate()
 
-  const { data, edit } = useInputText({})
-  const { sendData, message } = useLoginCheck()
+  const { data, edit } = useInputText({});
+  const { sendData, message } = useLoginCheck();
 
-  const [disabledButton, setDisabledButton] = useState(true)
-  const [openModal, setOpenModal] = useState(false)
+  const [disabledButton, setDisabledButton] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     if (data?.username?.length >= 3 && data.password?.length >= 6 && data?.role !== undefined) { setDisabledButton(false); return }
-    setDisabledButton(true)
-  }, [data])
+    setDisabledButton(true);
+  }, [data]);
 
   return (
         <>

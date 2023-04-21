@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useTypedSelector } from './useTypedSelector'
 import { useNavigate } from 'react-router-dom'
-import { selectUserRole } from '../redux/user/userSlice'
+import { selectUserId, selectUserRole } from '../redux/user/userSlice'
 import { type ApiResponse, apiRequest } from '../api/apiRequest'
 
 export function useSearch (): {
@@ -9,6 +9,7 @@ export function useSearch (): {
   filteredArray: (arg: string) => void
 } {
   const userRole = useTypedSelector(selectUserRole)
+  const userId = useTypedSelector(selectUserId)
 
   const [array, setArray] = useState([])
 
@@ -26,7 +27,7 @@ export function useSearch (): {
   const filter = (text: string): void => {
     if (text === '') return
     const searchRequest = async (): Promise<ApiResponse> => await apiRequest(
-      `api/search/${userRole === 'lady' ? 'gentleman' : 'lady'}/${text}/91`,
+      `api/search/${userRole === 'lady' ? 'gentleman' : 'lady'}/${text}/${userId}`,
       'get',
       null,
       userRole

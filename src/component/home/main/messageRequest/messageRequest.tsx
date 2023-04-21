@@ -1,9 +1,9 @@
 import { apiRequest } from '../../../../api/apiRequest'
 import { Button } from '../../../layout/button/button'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTypedSelector } from '../../../../hooks/useTypedSelector'
-import { selectUser } from '../../../../redux/user/userSlice'
+import { selectUser, selectUserConversation } from '../../../../redux/user/userSlice'
 
 interface RequestProps {
   destination: any
@@ -11,12 +11,21 @@ interface RequestProps {
 
 export function MessageRequest ({ destination }: RequestProps): JSX.Element {
   const user = useTypedSelector(selectUser)
+  const conversations = useTypedSelector(selectUserConversation)
+
   const [message, setMessage] = useState({
     message: '',
     class: ''
-  })
+  });
+  const [connected, setConnected] = useState<boolean | undefined>(undefined);
 
-  const navigation = useNavigate()
+  const navigation = useNavigate();
+
+  useEffect(() => {
+    const alreadyConnected = conversations?.some(
+      conversation => conversation.id === destination.gentlemanId || destination.ladyId);
+    setConnected(alreadyConnected);
+  }, []);
 
   async function sendRequest (): Promise<void> {
     const body = {
@@ -33,7 +42,13 @@ export function MessageRequest ({ destination }: RequestProps): JSX.Element {
   }
 
   return (
-        <div>
+    <>
+      {
+        (connected ?? false)
+          ? <div>
+            Vec ste povezani!
+          </div>
+          : <div>
             <h2>Hajde da se dopisujemo!</h2>
             <div>
                 <p>
@@ -49,5 +64,7 @@ export function MessageRequest ({ destination }: RequestProps): JSX.Element {
                 <p className={message.class}>{message.message}</p>
             </div>
         </div>
+      }
+    </>
   )
 }
