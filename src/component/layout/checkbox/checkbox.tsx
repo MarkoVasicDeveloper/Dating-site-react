@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { formValidation } from '../../../misc/formValidation'
 import './checkbox.scss'
+import { useFormValidation } from '../../../hooks/useFormValidation'
 
 interface checkboxInput {
   id: string
@@ -13,21 +13,8 @@ interface checkboxInput {
 
 export function Checkbox ({ id, onChange, value, title, required, implementClass }: checkboxInput): JSX.Element {
   const [dirty, setDirty] = useState(false)
-  const [message, setMessage] = useState('')
 
-  function checkedInput (event: any): void {
-    const validation = formValidation((event.target.checked === true) ? 'true' : '', 'checkbox', dirty, required)
-
-    if (!validation.valid) {
-      setMessage(validation.value)
-      onChange({ value, checked: false })
-      return
-    };
-
-    setMessage('')
-
-    onChange({ value, checked: event.target.checked })
-  }
+  const { validation, message } = useFormValidation(onChange, 'checkbox', dirty, required, value);
 
   return (
         <div className="checkbox-container">
@@ -37,7 +24,7 @@ export function Checkbox ({ id, onChange, value, title, required, implementClass
                 name={id}
                 id={id}
                 value={value}
-                onChange={checkedInput}
+                onChange={(e) => { validation(e) }}
                 required={required}
                 onFocus = {() => { setDirty(true) }}
             />

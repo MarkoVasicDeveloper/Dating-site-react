@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-/* eslint-disable react/react-in-jsx-scope */
 import { useState } from 'react'
-import { formValidation } from '../../../misc/formValidation'
 import './input.scss'
+import { useFormValidation } from '../../../hooks/useFormValidation'
 
 interface InputParam {
   onChangeInput: any
@@ -16,29 +14,12 @@ interface InputParam {
   placeholder?: string
 }
 
-export function Input ({ onChangeInput, onEnter, type, name, id, title, required, footnoteTitle, placeholder }: InputParam) {
-  const [message, setMessage] = useState(' ')
-  const [invalid, setInvalid] = useState(false)
+export function Input ({ onChangeInput, onEnter, type, name, id, title, required, footnoteTitle, placeholder }: InputParam): JSX.Element {
   const [dirty, setDirty] = useState(false)
 
-  function validation (
-    event: React.ChangeEvent<HTMLInputElement> |
-    React.FocusEvent<HTMLInputElement, Element>) {
-    const validationResult = formValidation(event.target.value, name, dirty, required)
+  const { validation, message, invalid } = useFormValidation(onChangeInput, name, dirty, required);
 
-    if (!validationResult.valid) {
-      setMessage(validationResult.value)
-      setInvalid(true)
-      onChangeInput(event)
-      return
-    }
-
-    setInvalid(false)
-    setMessage('')
-    onChangeInput(event)
-  }
-
-  function setOnEnter (event: React.KeyboardEvent<HTMLInputElement>) {
+  function setOnEnter (event: React.KeyboardEvent<HTMLInputElement>): void {
     if (event.key === 'Enter') {
       (event.target as HTMLInputElement).value = ''
       onChangeInput(name)

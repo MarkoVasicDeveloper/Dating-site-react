@@ -1,0 +1,15 @@
+@import '../../scss/defaultStyle.scss';
+
+#sing-up{
+    padding-bottom: 3rem;
+}
+
+.submit-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.warning{
+    color: $warning;
+}

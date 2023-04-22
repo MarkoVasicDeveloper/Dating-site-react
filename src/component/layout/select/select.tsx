@@ -1,6 +1,6 @@
-import { formValidation } from '../../../misc/formValidation'
 import { useState } from 'react'
 import './select.scss'
+import { useFormValidation } from '../../../hooks/useFormValidation'
 
 interface selectOptions {
   title: string
@@ -12,19 +12,8 @@ interface selectOptions {
 
 export function Select ({ title, id, options, required, onChange }: selectOptions): JSX.Element {
   const [dirty, setDirty] = useState(false)
-  const [message, setMessage] = useState('')
 
-  function validation (value: string): void {
-    const validationResult = formValidation(value, 'select', dirty, required)
-    if (!validationResult.valid) {
-      setMessage('Ovo polje je obavezno!')
-      onChange('')
-      return
-    };
-
-    setMessage('')
-    onChange(value)
-  }
+  const { validation, message } = useFormValidation(onChange, 'select', dirty, required);
 
   return (
         <div className="select-container">
@@ -34,7 +23,7 @@ export function Select ({ title, id, options, required, onChange }: selectOption
                 required={required}
                 name={id}
                 id={id}
-                onChange={(e) => { validation(e.target.value) }}
+                onChange={(e) => { validation(e) }}
                 onFocus={() => { setDirty(true) }}
             >
                 {
